@@ -79,6 +79,15 @@ namespace adapman.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This operation is only effective on adapters that currently are connected to a network..
+        /// </summary>
+        public static string OperationEffectiveOnlyOnCurrentlyConnectedAdapters {
+            get {
+                return ResourceManager.GetString("OperationEffectiveOnlyOnCurrentlyConnectedAdapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usage:
         ///   adapman [-da] [-ea] [-cw:ssid &quot;ssid&quot;] [-cw:pwd &quot;password&quot;] [-dw &quot;SSID&quot;]
         ///
@@ -103,6 +112,15 @@ namespace adapman.Properties {
         public static string ValueParamReq {
             get {
                 return ResourceManager.GetString("ValueParamReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Wi-Fi adapter is already in the disconnected state..
+        /// </summary>
+        public static string WifiAdapterAlreadyDisconnected {
+            get {
+                return ResourceManager.GetString("WifiAdapterAlreadyDisconnected", resourceCulture);
             }
         }
     }

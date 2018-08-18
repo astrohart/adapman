@@ -147,4 +147,10 @@ Press any key to exit...</value>
   <data name="ConnectSSIDReq" xml:space="preserve">
     <value>Must specify the SSID of the wifi network you want to connect to.</value>
   </data>
+  <data name="OperationEffectiveOnlyOnCurrentlyConnectedAdapters" xml:space="preserve">
+    <value>This operation is only effective on adapters that currently are connected to a network.</value>
+  </data>
+  <data name="WifiAdapterAlreadyDisconnected" xml:space="preserve">
+    <value>The Wi-Fi adapter is already in the disconnected state.</value>
+  </data>
 </root>

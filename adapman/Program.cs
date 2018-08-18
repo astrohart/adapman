@@ -1,4 +1,5 @@
 ﻿using System;
+using adapman.Properties;
 
 namespace adapman
 {
@@ -20,15 +21,18 @@ namespace adapman
             switch (CommandLine.Action)
             {
                 case CommandLineAction.DisableAllAdapters:
-                    foreach (var adapter in NetworkAdapterManager.GetAdapters())
-                    {
+                    if (!WifiManager.IsConnected) {
+                        Console.WriteLine(Resources.OperationEffectiveOnlyOnCurrentlyConnectedAdapters);
+                        break;
+                    }
+
+                    foreach (var adapter in NetworkAdapterManager.GetAdapters()) {
                         adapter.Disable();
                     }
                     break;
                 
                 case CommandLineAction.EnableAllAdapters:
-                    foreach (var adapter in NetworkAdapterManager.GetAdapters())
-                    {
+                    foreach (var adapter in NetworkAdapterManager.GetAdapters()) {
                         adapter.Enable();
                     }
                     break;
@@ -38,6 +42,11 @@ namespace adapman
                     break;
 
                 case CommandLineAction.DisconnectWifi:
+                    if (!WifiManager.IsConnected) {
+                        Console.WriteLine(Resources.WifiAdapterAlreadyDisconnected);
+                        break;
+                    }
+
                     WifiManager.Disconnect(CommandLine.WifiSSID);
                     break;
                 
