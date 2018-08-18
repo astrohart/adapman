@@ -11,6 +11,12 @@ namespace adapman
 
         public static void Main(string[] args)
         {
+            if (CommandLine == null)
+            {
+                CommandLineInfo.PrintUsageMessage();
+                return;
+            }
+
             switch (CommandLine.Action)
             {
                 case CommandLineAction.DisableAllAdapters:

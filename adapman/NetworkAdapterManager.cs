@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace adapman
 {
@@ -24,17 +21,37 @@ namespace adapman
             var oSearcher = new ManagementObjectSearcher(oQuery);
             var oReturnCollection = oSearcher.Get();
 
-
             foreach (ManagementObject mo in oReturnCollection)
             {
-                var netEnabled = Convert.ToBoolean(mo["NetEnabled"].ToString());
-                adapters.Add(new NetworkAdapter(
-                    Convert.ToInt32(mo["DeviceID"].ToString()),
-                    mo["ProductName"].ToString(),
-                    mo["Description"].ToString(),
-                    netEnabled,
-                    Convert.ToInt32(mo["NetConnectionStatus"].ToString())));
-            };
+                try
+                {
+                    if (mo == null)
+                        continue;
+
+                    var devId = Convert.ToInt32(mo["DeviceID"].ToString());
+                    var productName = mo["ProductName"].ToString();
+                    var description = mo["Description"].ToString();
+                    var netConnectionStatus = mo["NetConnectionStatus"] == null
+                        ? -1
+                        : Convert.ToInt32(mo["NetConnectionStatus"].ToString());
+
+                    var netEnabled = Convert.ToBoolean(mo["NetEnabled"].ToString());
+
+                    adapters.Add(new NetworkAdapter(
+                        devId,
+                        productName,
+                        description,
+                        netEnabled,
+                        netConnectionStatus));
+                }
+                catch (NullReferenceException)
+                {
+                    // ignore some adapters, such as the Bluetooth adapter, that need user interaction
+                    // to enable/disable, per <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>
+
+                }
+            }
+
             return adapters;
         }
     }

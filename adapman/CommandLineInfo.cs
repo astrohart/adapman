@@ -32,9 +32,13 @@ namespace adapman
         /// <returns></returns>
         public static CommandLineInfo ParseCommandLine(string[] args)
         {
-            // Skip the first element of args since it's usually initialized by Environment.GetCommandLineArgs which passes the full
+            // Skip the first element of args if it contains the application executable's filename
+            // since it's usually initialized by Environment.GetCommandLineArgs which passes the full
             // path to this executeable as the first element of args
-            if (!CommandLineValidator.IsCommandLineValid(args.Length > 0 && args[0].Contains("adapman") ? args.Skip(1).ToArray() : args)) 
+            if (args[0].Contains("adapman"))    // strip out the first elt
+                args = args.Skip(1).ToArray();
+
+            if (!CommandLineValidator.IsCommandLineValid(args)) 
             {
                 PrintUsageMessage();
                 return null;
@@ -68,7 +72,7 @@ namespace adapman
         /// Prints a usage message to the console, and then exits the process.  This is usually called in the case
         /// where the command-line arguments are not valid.
         /// </summary>
-        protected static void PrintUsageMessage()
+        public static void PrintUsageMessage()
         {
             Console.WriteLine(Resources.UsageMessage);
             var firstArg = Environment.GetCommandLineArgs().First();

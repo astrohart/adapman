@@ -37,23 +37,30 @@ namespace adapman
 
         private void ToggleEnabled()
         {
-            var currentMObject = new ManagementObject();
-            var strWQuery =
-                $"SELECT DeviceID,ProductName,Description,NetEnabled FROM Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
-
-            var oQuery = new System.Management.ObjectQuery(strWQuery);
-            var oSearcher = new ManagementObjectSearcher(oQuery);
-            var oReturnCollection = oSearcher.Get();
-
-            foreach (var mo in oReturnCollection)
+            try
             {
-                currentMObject = (ManagementObject)mo;
+                var currentMObject = new ManagementObject();
+                var strWQuery =
+                    $"SELECT DeviceID,ProductName,Description,NetEnabled FROM Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
+
+                var oQuery = new System.Management.ObjectQuery(strWQuery);
+                var oSearcher = new ManagementObjectSearcher(oQuery);
+                var oReturnCollection = oSearcher.Get();
+
+                foreach (var mo in oReturnCollection)
+                {
+                    currentMObject = (ManagementObject) mo;
+                }
+
+                //Enable the Network Adapter
+                currentMObject.InvokeMethod(IsEnabled ? "Disable" : "Enable", null);
+
+                IsEnabled = !IsEnabled;
             }
-
-            //Enable the Network Adapter
-            currentMObject.InvokeMethod(IsEnabled ? "Disable" : "Enable", null);
-
-            IsEnabled = !IsEnabled;
+            catch
+            {
+                // Nothing here
+            }
         }
     }
 }
