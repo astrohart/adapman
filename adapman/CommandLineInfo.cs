@@ -80,7 +80,6 @@ namespace adapman
                 return;
             }
 
-            Console.ReadKey();
             Environment.Exit(-1);
         }
     }

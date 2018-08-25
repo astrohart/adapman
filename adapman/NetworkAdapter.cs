@@ -21,21 +21,15 @@ namespace adapman
 
         public void Disable()
         {
-            if (!IsEnabled)
-                return;
-
-            ToggleEnabled();
+            DoDisable();
         }
 
         public void Enable()
         {
-            if (IsEnabled)
-                return;
-
-            ToggleEnabled();
+            DoEnable();
         }
 
-        private void ToggleEnabled()
+        private void DoEnable()
         {
             try
             {
@@ -53,13 +47,43 @@ namespace adapman
                 }
 
                 //Enable the Network Adapter
-                currentMObject.InvokeMethod(IsEnabled ? "Disable" : "Enable", null);
+                currentMObject.InvokeMethod("Enable", null);
 
-                IsEnabled = !IsEnabled;
+                IsEnabled = true;
             }
             catch
             {
                 // Nothing here
+                IsEnabled = false;      // failed to enable
+            }
+        }
+
+        private void DoDisable()
+        {
+            try
+            {
+                var currentMObject = new ManagementObject();
+                var strWQuery =
+                    $"SELECT DeviceID,ProductName,Description,NetEnabled FROM Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
+
+                var oQuery = new System.Management.ObjectQuery(strWQuery);
+                var oSearcher = new ManagementObjectSearcher(oQuery);
+                var oReturnCollection = oSearcher.Get();
+
+                foreach (var mo in oReturnCollection)
+                {
+                    currentMObject = (ManagementObject) mo;
+                }
+
+                //Disable the Network Adapter
+                currentMObject.InvokeMethod("Disable", null);
+
+                IsEnabled = false;
+            }
+            catch
+            {
+                // Nothing here
+                IsEnabled = true;       // failed to disable
             }
         }
     }

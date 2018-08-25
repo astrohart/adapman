@@ -118,25 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UsageMessage" xml:space="preserve">
-    <value>Usage:
+    <value>xyLOGIX Adapter Manager v1.0
+Command-line utility that manages the disabled/enabled and connected/disconnected state of 
+your computer's network and Wi-Fi adapter(s).
+
+Copyright (c) 2018 xyLOGIX, LLC.  All rights reserved.
+
+Usage:
    adapman [-da] [-ea] [-cw:ssid "ssid"] [-cw:pwd "password"] [-dw "SSID"]
 
 OPTIONS:
     NOTE: Only one switch may be applied at any time, unless the 'cw' switches are used, in which case,
     both are required.
-
-    -da                Disables ALL of the network adapters installed on the system.
-    -ea                Enables ALL of the network adapters installed on the system.
-    -cw:ssid       Connects to the Wi-Fi network with the given SSID (The Wi-Fi adapter must be
-                          enabled first with -ea).  The SSID must always be in double-quotes.
-    -cw:pwd      "" if the Wi-Fi network with the specified SSID is open; otherwise, the network security
-                         key for the Wi-Fi network with specified SSID.  If not given, empty double quotes
-                         must be specified. If a password is given, the password must be in double quotes. If the
-                         -cw:ssid switch is specified, this switch is mandatory.
-    -dw              Disconnects from the Wi-Fi network with the specified SSID, but leaves the adapter
-                         enabled.
-
-Press any key to exit...</value>
+	
+    -da                Disables ALL of the network adapters installed on the system.  Will not work 
+                       on adapters that are not currently connected to a network.
+					   
+    -ea                Enables ALL of the network adapters installed on the system.  Will not work on
+                       adapters that are already enabled.
+					   
+    -cw:ssid           Connects to the Wi-Fi network with the given SSID (The Wi-Fi adapter must be
+                       enabled first with -ea).  The SSID must always be in double-quotes.
+					   
+    -cw:pwd            "" if the Wi-Fi network with the specified SSID is open; otherwise, the network security
+                       key for the Wi-Fi network with specified SSID.  If not given, empty double quotes
+                       must be specified. If a password is given, the password must be in double quotes. If the
+                       -cw:ssid switch is specified, this switch is mandatory.  A Wi-Fi network requiring a password
+                       may not connect if the password is not specified; however, sometimes it will still connect if
+                       Windows has been set to remember the password.
+					   
+    -dw                Disconnects from the Wi-Fi network with the specified SSID, but leaves the adapter
+                       enabled.  Will not work on adapters that are already not connected to a network.</value>
   </data>
   <data name="ValueParamReq" xml:space="preserve">
     <value>The 'value' parameter must be non-blank.</value>

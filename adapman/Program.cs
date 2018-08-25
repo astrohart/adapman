@@ -21,10 +21,10 @@ namespace adapman
             switch (CommandLine.Action)
             {
                 case CommandLineAction.DisableAllAdapters:
-                    if (!WifiManager.IsConnected) {
-                        Console.WriteLine(Resources.OperationEffectiveOnlyOnCurrentlyConnectedAdapters);
-                        break;
-                    }
+                    //if (!WifiManager.IsConnected) {
+                    //    Console.WriteLine(Resources.OperationEffectiveOnlyOnCurrentlyConnectedAdapters);
+                    //    break;
+                    //}
 
                     foreach (var adapter in NetworkAdapterManager.GetAdapters()) {
                         adapter.Disable();

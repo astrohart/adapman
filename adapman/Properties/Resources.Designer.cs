@@ -88,17 +88,20 @@ namespace adapman.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usage:
+        ///   Looks up a localized string similar to xyLOGIX Adapter Manager v1.0
+        ///Command-line utility that manages the disabled/enabled and connected/disconnected state of 
+        ///your computer&apos;s network and Wi-Fi adapter(s).
+        ///
+        ///Copyright (c) 2018 xyLOGIX, LLC.  All rights reserved.
+        ///
+        ///Usage:
         ///   adapman [-da] [-ea] [-cw:ssid &quot;ssid&quot;] [-cw:pwd &quot;password&quot;] [-dw &quot;SSID&quot;]
         ///
         ///OPTIONS:
         ///    NOTE: Only one switch may be applied at any time, unless the &apos;cw&apos; switches are used, in which case,
         ///    both are required.
-        ///
-        ///    -da                Disables ALL of the network adapters installed on the system.
-        ///    -ea                Enables ALL of the network adapters installed on the system.
-        ///    -cw:ssid       Connects to the Wi-Fi network with the given SSID (The Wi-Fi adapter must be
-        ///                  [rest of string was truncated]&quot;;.
+        ///	
+        ///    -da                Disables ALL of the network ada [rest of string was truncated]&quot;;.
         /// </summary>
         public static string UsageMessage {
             get {

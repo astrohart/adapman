@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("adapman")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("xyLOGIX Adapter Manager")]
+[assembly: AssemblyDescription("Command-line utility that manages the disabled/enabled and connected/disconnected state of your computer's network and Wi-Fi adapter(s).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("adapman")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("xyLOGIX, LLC")]
+[assembly: AssemblyProduct("xyLOGIX Adapter Manager")]
+[assembly: AssemblyCopyright("Copyright © 2018 xyLOGIX, LLC.  All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

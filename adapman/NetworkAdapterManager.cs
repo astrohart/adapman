@@ -21,8 +21,9 @@ namespace adapman
             var oSearcher = new ManagementObjectSearcher(oQuery);
             var oReturnCollection = oSearcher.Get();
 
-            foreach (ManagementObject mo in oReturnCollection)
+            foreach (var o in oReturnCollection)
             {
+                var mo = (ManagementObject) o;
                 try
                 {
                     if (mo == null)
