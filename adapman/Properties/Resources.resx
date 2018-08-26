@@ -165,4 +165,7 @@ OPTIONS:
   <data name="WifiAdapterAlreadyDisconnected" xml:space="preserve">
     <value>The Wi-Fi adapter is already in the disconnected state.</value>
   </data>
+  <data name="UnandledExceptionError" xml:space="preserve">
+    <value>Unable to process the requested operation. {0}.  Try to call this program again.</value>
+  </data>
 </root>

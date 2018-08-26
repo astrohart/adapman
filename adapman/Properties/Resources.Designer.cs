@@ -88,6 +88,15 @@ namespace adapman.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to process the requested operation. {0}.  Try to call this program again..
+        /// </summary>
+        public static string UnandledExceptionError {
+            get {
+                return ResourceManager.GetString("UnandledExceptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to xyLOGIX Adapter Manager v1.0
         ///Command-line utility that manages the disabled/enabled and connected/disconnected state of 
         ///your computer&apos;s network and Wi-Fi adapter(s).
