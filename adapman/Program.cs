@@ -119,8 +119,18 @@ namespace adapman
         /// <param name="e">Reference to an instance of <see cref="T:System.UnhandledExceptionEventArgs"/> that contains the event data.</param>
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            // To handle uncaught exceptions gracefully, we will simply write an error message to the console, 
+            // which includes the exception's message text.  Be careful, since the e.ExceptionObject is of type
+            // object, who knows?  It might not necessarily be cast-able to System.Exception.  So we pass it to a
+            // helper method.
+            var message = GetMessageFromExceptionObject(e.ExceptionObject);
             Console.WriteLine(Resources.UnandledExceptionError, 
-                (e.ExceptionObject as Exception)?.Message);
+                message);
+        }
+
+        private static string GetMessageFromExceptionObject(object exceptionObject)
+        {
+            return !(exceptionObject is Exception exception) ? string.Empty : exception.Message;
         }
     }
 }
