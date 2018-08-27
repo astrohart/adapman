@@ -123,14 +123,11 @@ namespace adapman
             // which includes the exception's message text.  Be careful, since the e.ExceptionObject is of type
             // object, who knows?  It might not necessarily be cast-able to System.Exception.  So we pass it to a
             // helper method.
-            var message = GetMessageFromExceptionObject(e.ExceptionObject);
-            Console.WriteLine(Resources.UnandledExceptionError, 
-                message);
-        }
-
-        private static string GetMessageFromExceptionObject(object exceptionObject)
-        {
-            return !(exceptionObject is Exception exception) ? string.Empty : exception.Message;
+            var message = ExceptionHelpers.GetMessageFromExceptionObject(e.ExceptionObject);
+            
+            // Once we have obtained the message, write it to the console.  The UnhandledExceptionError resource string
+            // is a formatted value and it can handle an empty message variable.
+            Console.WriteLine(Resources.UnandledExceptionError, message);
         }
     }
 }
