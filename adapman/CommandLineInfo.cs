@@ -4,6 +4,9 @@ using adapman.Properties;
 
 namespace adapman
 {
+    /// <summary>
+    /// Provides functionality to expose settings based on the command-line options provided to a program by the user.
+    /// </summary>
     public class CommandLineInfo
     {
         ///<summary>
@@ -19,9 +22,19 @@ namespace adapman
             WifiPassword = wifiPassword;
         }
 
+        /// <summary>
+        /// Gets a value indicating the action that the user wants the program to take.  One of the <see cref="T:adapman.CommandLineAction"/> values.
+        /// </summary>
         public CommandLineAction Action { get; }
 
+        /// <summary>
+        /// Gets a string containing the password to the Wi-Fi network that the user wants us to connect to.
+        /// </summary>
         public string WifiPassword { get; }
+
+        /// <summary>
+        /// Gets a string containing the SSID of the Wi-Fi network that the user wants to work with.
+        /// </summary>
         public string WifiSSID { get; }
 
         /// <summary>
