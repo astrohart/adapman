@@ -168,4 +168,19 @@ OPTIONS:
   <data name="UnandledExceptionError" xml:space="preserve">
     <value>Unable to process the requested operation. {0}.  Try to call this program again.</value>
   </data>
+  <data name="DisableAllAdaptersArgument" xml:space="preserve">
+    <value>-da</value>
+  </data>
+  <data name="EnableAllAdaptersArgument" xml:space="preserve">
+    <value>-ea</value>
+  </data>
+  <data name="DisconnectWiFiArgument" xml:space="preserve">
+    <value>-dw:ssid</value>
+  </data>
+  <data name="ConnectWifiSSIDArgument" xml:space="preserve">
+    <value>-cw:ssid</value>
+  </data>
+  <data name="ConnectWifiPasswordArgument" xml:space="preserve">
+    <value>-cw:pwd</value>
+  </data>
 </root>

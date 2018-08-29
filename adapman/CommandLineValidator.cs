@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using adapman.Properties;
 
 namespace adapman
 {
@@ -35,14 +36,17 @@ namespace adapman
                 // array consists of either the '-da' or the '-ea' switches. Case
                 // does not matter.
                 case 1:
-                    return args.ContainsNoCase("-da") || args.ContainsNoCase("-ea");
+                    return Resources.DisableAllAdaptersArgument.Equals(
+                               args[0].ToLowerInvariant())
+                           || Resources.EnableAllAdaptersArgument.Equals(
+                               args[0].ToLowerInvariant());
 
                 // The command-line is valid, in the case that exactly two
                 // arguments are passed, if the first argument matches '-dw:ssid'
                 // regardless of case, and the second argument is non-blank (i.e.,
                 // is the SSID of the Wi-Fi network from which to disconnect)
                 case 2:
-                    return "-dw:ssid".Equals(args[0].ToLowerInvariant())
+                    return Resources.DisconnectWiFiArgument.Equals(args[0].ToLowerInvariant())
                            && !string.IsNullOrWhiteSpace(args[1]);
 
                 // The command-line is also valid, in the case that exactly four
@@ -52,9 +56,9 @@ namespace adapman
                 // values are non-blank. At this time, we do not support open
                 // Wi-Fi networks, i.e., those that have no network security key
                 case 4:
-                    return "-cw:ssid".Equals(args[0].ToLowerInvariant())
+                    return Resources.ConnectWifiSSIDArgument.Equals(args[0].ToLowerInvariant())
                      && !string.IsNullOrWhiteSpace(args[1])
-                     && "-cw:pwd".Equals(args[2].ToLowerInvariant())
+                     && Resources.ConnectWifiPasswordArgument.Equals(args[2].ToLowerInvariant())
                      || !string.IsNullOrWhiteSpace(args[3]);
             }
 

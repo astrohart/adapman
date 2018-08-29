@@ -70,11 +70,56 @@ namespace adapman.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -cw:pwd.
+        /// </summary>
+        public static string ConnectWifiPasswordArgument {
+            get {
+                return ResourceManager.GetString("ConnectWifiPasswordArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -cw:ssid.
+        /// </summary>
+        public static string ConnectWifiSSIDArgument {
+            get {
+                return ResourceManager.GetString("ConnectWifiSSIDArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Must specify the SSID of the wifi network you want to disconnect from..
         /// </summary>
         public static string DiisconnectSSIDReq {
             get {
                 return ResourceManager.GetString("DiisconnectSSIDReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -da.
+        /// </summary>
+        public static string DisableAllAdaptersArgument {
+            get {
+                return ResourceManager.GetString("DisableAllAdaptersArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -dw:ssid.
+        /// </summary>
+        public static string DisconnectWiFiArgument {
+            get {
+                return ResourceManager.GetString("DisconnectWiFiArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -ea.
+        /// </summary>
+        public static string EnableAllAdaptersArgument {
+            get {
+                return ResourceManager.GetString("EnableAllAdaptersArgument", resourceCulture);
             }
         }
         
