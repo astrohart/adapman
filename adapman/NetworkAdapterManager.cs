@@ -20,13 +20,19 @@ namespace adapman
         {
             var adapters = new List<NetworkAdapter>();
 
-            var queryString = "SELECT DeviceID, ProductName, Description, "
-                            + "NetEnabled, NetConnectionStatus "
-                            + "FROM Win32_NetworkAdapter "
-                            + "WHERE Manufacturer <> 'Microsoft' ";
+            const string queryString = "SELECT DeviceID, ProductName, Description, "
+                                       + "NetEnabled, NetConnectionStatus "
+                                       + "FROM Win32_NetworkAdapter "
+                                       + "WHERE Manufacturer <> 'Microsoft' ";
             var query = new ObjectQuery(queryString);
             var searcher = new ManagementObjectSearcher(query);
             var results = searcher.Get();
+
+            // Check whether any results were obtained from our search.  If we
+            // have no results, then return the empty list (the default value of
+            // the adapters variable)
+            if (results.Count == 0)
+                return adapters;
 
             foreach (var managementBaseObject in results)
             {
@@ -57,7 +63,7 @@ namespace adapman
                 {
                     // ignore some adapters, such as the Bluetooth adapter, that
                     // need user interaction to enable/disable, per
-                    // <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>
+                    // <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>\
                 }
             }
 
