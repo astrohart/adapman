@@ -7,23 +7,66 @@ using System.Xml.Linq;
 
 namespace adapman
 {
+    /// <summary>
+    /// Provides methods and functionality for managing the computer's Wi-Fi
+    /// connections.
+    /// </summary>
     public static class WifiManager
     {
+        /// <summary>
+        /// Gets a value indicating whether this computer is currently connected
+        /// to a Wi-Fi network.
+        /// </summary>
+        /// <remarks>
+        /// This property returns true the first time it sees a Wi-Fi interface
+        /// that is connected to a Wi-Fi network. If there are more than one
+        /// Wi-Fi adapter in the user's computer, this property will think the
+        /// computer is connected to Wi-Fi if just one of the adapter(s) or
+        /// interface(s) is connected.
+        /// </remarks>
         public static bool IsConnected
         {
             get
             {
-                var client = new WlanClient();
-                if (!client.Interfaces.Any())
-                    return false;
+                var result = false;
 
-                var wlanInterface = client.Interfaces.FirstOrDefault();
-                if (wlanInterface == null)
-                    return false;
-                return wlanInterface.InterfaceState == Wlan.WlanInterfaceState.Connected;
+                try
+                {
+                    var client = new WlanClient();
+                    result = client.Interfaces.Any(iface =>
+                        iface.InterfaceState == Wlan.WlanInterfaceState.Connected);
+                }
+                catch
+                {
+                    result = false;
+                }
+
+                return result;
             }
         }
 
+        /// <summary>
+        /// Connects the user's computer to the Wi-Fi network with the specified
+        /// <see cref="ssid" /> and <see cref="password" /> (i.e., network
+        /// security key). Will not work for so-called "open" Wi-Fi hotspots.
+        /// </summary>
+        /// <param name="ssid">
+        /// (Required.) SSID of the Wi-Fi network to which the user wants to
+        /// connect.
+        /// </param>
+        /// <param name="password">
+        /// (Required.) The password, i.e., network security key, of the Wi-Fi
+        /// network to which the user wants to connect.
+        /// </param>
+        /// <remarks>
+        /// Attempts to connect to the Wi-Fi network with SSID and network
+        /// security key specified by the <see cref="ssid" /> and
+        /// <see cref="password" /> parameters. Uses the first available Wi-Fi
+        /// interface on a system.
+        /// </remarks>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the <see cref="ssid" /> value is a blank string.
+        /// </exception>
         public static void Connect(string ssid, string password)
         {
             try
@@ -98,6 +141,17 @@ namespace adapman
             }
         }
 
+        /// <summary>
+        /// Attempts to disconnect the user's Wi-Fi adapter from the network with
+        /// the SSID specified.
+        /// </summary>
+        /// <param name="ssid">
+        /// (Required.) SSID of the Wi-Fi network from which the user wants to
+        /// disconnect.
+        /// </param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the <see cref="ssid" /> value is a blank string.
+        /// </exception>
         public static void Disconnect(string ssid)
         {
             if (string.IsNullOrWhiteSpace(ssid))
@@ -110,12 +164,43 @@ namespace adapman
             wlanInterface?.DeleteProfile(ssid);
         }
 
+        /// <summary>
+        /// Gets the string representation of a given Wi-Fi network's SSID from
+        /// the reference to the instance of
+        /// <see cref="T:NativeWifi.Wlan.Dot11Ssid" /> specified in the
+        /// <see cref="ssid" /> parameter.
+        /// </summary>
+        /// <param name="ssid">
+        /// Reference to an instance of
+        /// <see cref="T:NativeWifi.Wlan.Dot11Ssid" /> representing the SSID of
+        /// the desired Wi-Fi network.
+        /// </param>
+        /// <returns>
+        /// String representation of the SSID of the Wi-Fi network referenced by
+        /// the <see cref="ssid" /> parameter.
+        /// </returns>
         private static string GetStringForSSID(Wlan.Dot11Ssid ssid)
         {
             return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
         }
 
-        /// String to Hex
+        /// <summary>
+        /// Converts a string of characters to the hexadecimal equivalent.
+        /// </summary>
+        /// <param name="value">
+        /// (Required.) String value to be converted.
+        /// </param>
+        /// <returns>
+        /// String containing the hexadecimal equivalent of the string's
+        /// characters, in the default encoding of the string.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the <see cref="value" /> parameter is blank.
+        /// </exception>
+        /// <remarks>
+        /// This method is required for the <see cref="Connect" /> method to
+        /// work.
+        /// </remarks>
         private static string StringToHex(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
