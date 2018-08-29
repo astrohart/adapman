@@ -3,7 +3,7 @@
 namespace adapman
 {
     /// <summary>
-    /// Contains methods to validate command-line argument combinations.
+    /// Provides functionality to validate command-line argument combinations.
     /// </summary>
     public static class CommandLineValidator
     {
@@ -14,11 +14,21 @@ namespace adapman
         /// <returns>True if the command-line parameters are valid; false otherwise.</returns>
         public static bool IsCommandLineValid(string[] args)
         {
+            // If args is a null reference, or it does not contain any elements
+            // starting with the '-' character (for this program's switches),
+            // then the command-line is invalid, and we return false.
             if (args == null || !args.Any(s => s.StartsWith("-")))
                 return false;
 
+            // The user must pass at least one switch on the command line.
+            // Sometimes, the user passes two elements, a switch and a value.
+            // The only other valid possibility is that the user passed two
+            // switches, each with corresponding values
             switch (args.Length)
             {
+                // The command-line is valid if the single element
+                // of the args array consists of either the '-da'
+                // or the '-ea' switches.  Case does not matter.
                 case 1:
                     return args.Contains("-da") || args.Contains("-ea");
 
