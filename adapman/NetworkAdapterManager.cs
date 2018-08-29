@@ -4,6 +4,10 @@ using System.Management;
 
 namespace adapman
 {
+    ///<summary>
+    /// Provides methods and functionality for managing the network adapters
+    /// on the user's computer. 
+    ///</summary>
     public static class NetworkAdapterManager
     {
         ///<summary>
