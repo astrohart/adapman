@@ -1,9 +1,9 @@
-﻿using System;
+﻿using adapman.Properties;
+using NativeWifi;
+using System;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using adapman.Properties;
-using NativeWifi;
 
 namespace adapman
 {
@@ -20,7 +20,7 @@ namespace adapman
                 var wlanInterface = client.Interfaces.FirstOrDefault();
                 if (wlanInterface == null)
                     return false;
-              return wlanInterface.InterfaceState == Wlan.WlanInterfaceState.Connected;
+                return wlanInterface.InterfaceState == Wlan.WlanInterfaceState.Connected;
             }
         }
 
@@ -93,7 +93,8 @@ namespace adapman
             }
             catch
             {
-                // This code works irregardless of whether any exceptions are raised or not.
+                // This code works irregardless of whether any exceptions are
+                // raised or not.
             }
         }
 
