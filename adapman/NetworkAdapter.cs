@@ -2,9 +2,23 @@
 
 namespace adapman
 {
+    /// <summary>
+    /// Provides an encapsulation of a network adapter entry in Windows.
+    /// </summary>
     public class NetworkAdapter
     {
-        public NetworkAdapter(int deviceId, string productName, string description, bool enabled, int connStatus)
+        /// <summary>
+        /// Constructs a new instance of <see cref="T:adapman.NetworkAdapter"/>
+        /// and returns a refernce to it.
+        /// </summary>
+        /// <param name="deviceId">Integer specifying the Windows device ID of the adapter.</param>
+        /// <param name="productName">String specifying the product name of the adapter.</param>
+        /// <param name="description">String containing the description listed
+        /// in the system for the adapter.</param>
+        /// <param name="enabled">Flag indicating whether this adapter is enabled.</param>
+        /// <param name="connStatus">Integer value indicating the connected state of the adapter.</param>
+        public NetworkAdapter(int deviceId, string productName, 
+            string description, bool enabled, int connStatus)
         {
             DeviceID = deviceId;
             ProductName = productName;
@@ -13,11 +27,14 @@ namespace adapman
             ConnStatus = connStatus;
         }
 
-        public int ConnStatus { get; private set; }
-        public string Description { get; private set; }
-        public int DeviceID { get; private set; }
+        /// <summary>
+        /// Gets an integer value that specifies the connected state of this adapter.
+        /// </summary>
+        public int ConnStatus { get; }
+        public string Description { get; }
+        public int DeviceID { get; }
         public bool IsEnabled { get; private set; }
-        public string ProductName { get; private set; }
+        public string ProductName { get; }
 
         public void Disable()
         {
