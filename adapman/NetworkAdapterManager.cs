@@ -6,7 +6,7 @@ namespace adapman
 {
     ///<summary>
     /// Provides methods and functionality for managing the network adapters
-    /// on the user's computer. 
+    /// on the user's computer.
     ///</summary>
     public static class NetworkAdapterManager
     {
@@ -20,30 +20,30 @@ namespace adapman
         {
             var adapters = new List<NetworkAdapter>();
 
-            var strWQuery = "SELECT DeviceID, ProductName, Description, "
+            var queryString = "SELECT DeviceID, ProductName, Description, "
                             + "NetEnabled, NetConnectionStatus "
                             + "FROM Win32_NetworkAdapter "
                             + "WHERE Manufacturer <> 'Microsoft' ";
-            var oQuery = new ObjectQuery(strWQuery);
-            var oSearcher = new ManagementObjectSearcher(oQuery);
-            var oReturnCollection = oSearcher.Get();
+            var query = new ObjectQuery(queryString);
+            var searcher = new ManagementObjectSearcher(query);
+            var results = searcher.Get();
 
-            foreach (var o in oReturnCollection)
+            foreach (var managementBaseObject in results)
             {
-                var mo = (ManagementObject) o;
+                var currentManagementObject = (ManagementObject)managementBaseObject;
                 try
                 {
-                    if (mo == null)
+                    if (currentManagementObject == null)
                         continue;
 
-                    var devId = Convert.ToInt32(mo["DeviceID"].ToString());
-                    var productName = mo["ProductName"].ToString();
-                    var description = mo["Description"].ToString();
-                    var netConnectionStatus = mo["NetConnectionStatus"] == null
+                    var devId = Convert.ToInt32(currentManagementObject["DeviceID"].ToString());
+                    var productName = currentManagementObject["ProductName"].ToString();
+                    var description = currentManagementObject["Description"].ToString();
+                    var netConnectionStatus = currentManagementObject["NetConnectionStatus"] == null
                         ? -1
-                        : Convert.ToInt32(mo["NetConnectionStatus"].ToString());
+                        : Convert.ToInt32(currentManagementObject["NetConnectionStatus"].ToString());
 
-                    var netEnabled = Convert.ToBoolean(mo["NetEnabled"].ToString());
+                    var netEnabled = Convert.ToBoolean(currentManagementObject["NetEnabled"].ToString());
 
                     adapters.Add(new NetworkAdapter(
                         devId,
@@ -54,9 +54,9 @@ namespace adapman
                 }
                 catch (NullReferenceException)
                 {
-                    // ignore some adapters, such as the Bluetooth adapter, that need user interaction
-                    // to enable/disable, per <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>
-
+                    // ignore some adapters, such as the Bluetooth adapter, that
+                    // need user interaction to enable/disable, per
+                    // <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>
                 }
             }
 
