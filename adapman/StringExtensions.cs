@@ -18,7 +18,8 @@ namespace adapman
         /// Value that is to be searched for.
         /// </param>
         /// <returns>
-        /// True if the collection contains the <see cref="findWhat" /> value,
+        /// True if the collection contains at least one element that contains
+        /// the string specified by the value of the <see cref="findWhat" /> parameter,
         /// irregardless of case; false otherwise.
         /// </returns>
         public static bool ContainsNoCase(this ICollection<string> collection, string findWhat)
