@@ -31,40 +31,66 @@ namespace adapman
         /// Gets an integer value that specifies the connected state of this adapter.
         /// </summary>
         public int ConnStatus { get; }
+
+        /// <summary>
+        /// Gets a string containing the description of this network adapter as listed in the system.
+        /// </summary>
         public string Description { get; }
+
+        /// <summary>
+        /// Gets an integer value specifying the Windows device ID of this adapter.
+        /// </summary>
         public int DeviceID { get; }
+
+        /// <summary>
+        /// Gets a flag indicating whether this adapter is enabled.
+        /// </summary>
         public bool IsEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets a string containing the product name of this adapter as listed by the operating system.
+        /// </summary>
         public string ProductName { get; }
 
+        /// <summary>
+        /// Disables this network adapter (i.e., makes it unusable for connecting to networks).
+        /// </summary>
         public void Disable()
         {
             DoDisable();
         }
 
+        /// <summary>
+        /// Enables this network adapter (sets it as being able to connect to networks).
+        /// </summary>
         public void Enable()
         {
             DoEnable();
         }
 
+        /// <summary>
+        /// Implements the code to enable a network adapter.
+        /// </summary>
         private void DoEnable()
         {
             try
             {
-                var currentMObject = new ManagementObject();
-                var strWQuery =
+                var currentManagementObject = new ManagementObject();
+                var queryString =
                     $"SELECT DeviceID,ProductName,Description,NetEnabled FROM Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
 
-                var oQuery = new System.Management.ObjectQuery(strWQuery);
-                var oSearcher = new ManagementObjectSearcher(oQuery);
-                var oReturnCollection = oSearcher.Get();
+                var query = new ObjectQuery(queryString);
+                var searcher = new ManagementObjectSearcher(query);
+                var results = searcher.Get();
 
-                foreach (var mo in oReturnCollection)
+                foreach (var managementBaseObject in results)
                 {
-                    currentMObject = (ManagementObject) mo;
+                    currentManagementObject = (ManagementObject) managementBaseObject;
                 }
 
-                //Enable the Network Adapter
-                currentMObject.InvokeMethod("Enable", null);
+                //Enable the Network Adapter by invoking the appropriate method on the 
+                // management object found
+                currentManagementObject.InvokeMethod("Enable", null);
 
                 IsEnabled = true;
             }
@@ -83,7 +109,7 @@ namespace adapman
                 var strWQuery =
                     $"SELECT DeviceID,ProductName,Description,NetEnabled FROM Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
 
-                var oQuery = new System.Management.ObjectQuery(strWQuery);
+                var oQuery = new ObjectQuery(strWQuery);
                 var oSearcher = new ManagementObjectSearcher(oQuery);
                 var oReturnCollection = oSearcher.Get();
 

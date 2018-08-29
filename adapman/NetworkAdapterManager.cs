@@ -17,7 +17,7 @@ namespace adapman
                             + "NetEnabled, NetConnectionStatus "
                             + "FROM Win32_NetworkAdapter "
                             + "WHERE Manufacturer <> 'Microsoft' ";
-            var oQuery = new System.Management.ObjectQuery(strWQuery);
+            var oQuery = new ObjectQuery(strWQuery);
             var oSearcher = new ManagementObjectSearcher(oQuery);
             var oReturnCollection = oSearcher.Get();
 
