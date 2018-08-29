@@ -1,7 +1,8 @@
 ﻿namespace adapman
 {
     /// <summary>
-    /// Describes the action the user wants this application to take.
+    /// Describes the action the user wants this application to take,
+    /// based on which switches have been passed on the command-line.
     /// </summary>
     public enum CommandLineAction
     {
