@@ -95,7 +95,7 @@ namespace adapman
             var ssid = string.Empty;
             var password = string.Empty;
 
-            switch (args[0])
+            switch (args[0].ToLowerInvariant()) // do a case-insensitive comparison
             {
                 // This switch disables all the network adapters on the user's computer.
                 case "-da":
@@ -112,7 +112,7 @@ namespace adapman
                 // The '-cw:ssid' switch, which must be paired with the '-cw:pwd' switch,
                 // connects the user's computer to the Wi-Fi network whose SSID and password
                 // (i.e., network security key) follow the corresponding switches.
-                case "-cw:ssid" when args[2] == "-cw:pwd":
+                case "-cw:ssid" when args[2].ToLowerInvariant() == "-cw:pwd":
                     // New up a new CommandLineInfo instance and pass it the action of ConnectWifi.  We
                     // expect that the SSID and password (i.e., network security key) of the network to be
                     // connected should be in the second and fourth command-line parameters passed (following
