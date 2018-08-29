@@ -32,12 +32,21 @@ namespace adapman
 
                 try
                 {
+                    // Get a new instance of the NativeWifi.WlanClient class
                     var client = new WlanClient();
+
+                    // To determine if the computer is connected to a Wi-Fi network, we
+                    // simply ask if any of the computer's Wi-Fi interfaces are in the
+                    // Connected state.
                     result = client.Interfaces.Any(iface =>
                         iface.InterfaceState == Wlan.WlanInterfaceState.Connected);
                 }
                 catch
                 {
+                    // If we are here, then some kind of operating system error must
+                    // have occurred.  Ignore the error, and simply set the return value
+                    // of this property to false, which is its default value.
+
                     result = false;
                 }
 
@@ -71,16 +80,26 @@ namespace adapman
         {
             try
             {
+                // ssid is a required parameter
                 if (string.IsNullOrWhiteSpace(ssid))
                     throw new ArgumentNullException(nameof(ssid), Resources.ConnectSSIDReq);
 
+                // password is a required parameter
+                if (string.IsNullOrWhiteSpace(password))
+                    throw new ArgumentNullException(nameof(ssid), Resources.ConnectPasswordReq);
+
+                // Allocate a new instance of the NativeWifi.WlanClient class and get a reference to
+                // the first available Wi-Fi network interface.
                 var client = new WlanClient();
                 var wlanInterface = client.Interfaces.FirstOrDefault();
                 if (wlanInterface == null)
                     return;
 
+                // Obtain values to be utilized in the Wi-Fi profile XML below.
                 var mac = StringToHex(ssid);
                 var key = password;
+
+                // Format the Wi-Fi profile XML
                 var profile = string.Format(
                     new XDocument(new XElement(
                         XNamespace.Get("http://www.microsoft.com/networking/WLAN/profile/v1") + "WLANProfile",
@@ -131,6 +150,7 @@ namespace adapman
                                         XNamespace.Get("http://www.microsoft.com/networking/WLAN/profile/v1") +
                                         "keyMaterial", "{2}")))))).ToString(), ssid, mac, key);
 
+                // Set the current Wi-Fi interface to use the profile above, and then tell it to connect.
                 wlanInterface.SetProfile(Wlan.WlanProfileFlags.AllUser, profile, true);
                 wlanInterface.Connect(Wlan.WlanConnectionMode.Profile, Wlan.Dot11BssType.Any, ssid);
             }
@@ -157,11 +177,18 @@ namespace adapman
             if (string.IsNullOrWhiteSpace(ssid))
                 throw new ArgumentNullException(nameof(ssid), Resources.DiisconnectSSIDReq);
 
+            // Allocate a new instance of the NativeWifi.WlanClient that manages
+            // all this computer's Wi-Fi interfaces
             var client = new WlanClient();
 
+            // Obtain a reference to the first available Wi-Fi interface.
             var wlanInterface = client.Interfaces.FirstOrDefault();
+            if (wlanInterface == null)
+                return; // failed to obtain a Wi-Fi interface reference.
 
-            wlanInterface?.DeleteProfile(ssid);
+            // Delete the profile corresponding to the SSID specified, from the
+            // Wi-Fi interface.
+            wlanInterface.DeleteProfile(ssid);
         }
 
         /// <summary>
@@ -179,8 +206,14 @@ namespace adapman
         /// String representation of the SSID of the Wi-Fi network referenced by
         /// the <see cref="ssid" /> parameter.
         /// </returns>
+        /// <remarks>This method does not seem to be currently called; however, I
+        /// forget where it had been used, so until I remember, I won't delete it
+        /// or comment it out.
+        /// </remarks>
         private static string GetStringForSSID(Wlan.Dot11Ssid ssid)
         {
+            // Return the SSID property of the ssid structure, encoded
+            // in ASCII
             return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
         }
 
@@ -199,20 +232,54 @@ namespace adapman
         /// </exception>
         /// <remarks>
         /// This method is required for the <see cref="Connect" /> method to
-        /// work.
+        /// work.  If this method fails, the return value is the empty string.
         /// </remarks>
         private static string StringToHex(string value)
         {
+            var result = string.Empty;
+
+            // The value parameter is required.
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentNullException(nameof(value), Resources.ValueParamReq);
 
+            // Use a string builder
             var sb = new StringBuilder();
+
+            // Get all the bytes of the value parameter as an array and
+            // iterate through it.  Check to ensure there are more than
+            // zero elements in the array obtained, before proceeding.
+            // If the array has zero elements, return this method's
+            // default value, which is the empty string.
             var bytes = Encoding.Default.GetBytes(value);
-            foreach (var t in bytes)
+            if (bytes.Length == 0)
+                return result;
+
+            try
             {
-                sb.Append(Convert.ToString(t, 16));
+                // For each of the bytes in the bytes array,
+                // get its hexadecimal representation as a string
+                // and add it to our string builder.  Then, once we're
+                // done adding bytes, convert the resulting string to
+                // uppercase (by convention).
+
+                foreach (var t in bytes)
+                {
+                    var currentHexNumber = Convert.ToString(t, 16);
+                    sb.Append(currentHexNumber);
+                }
+
+                result = sb.ToString().ToUpper();
             }
-            return (sb.ToString().ToUpper());
+            catch
+            {
+                // I do not know what possible exceptions might get
+                // raised here, but just in case one does, return this
+                // method's default value, which is the empty string.
+                result = string.Empty;
+            }
+
+            // return the resulting string
+            return result;
         }
     }
 }

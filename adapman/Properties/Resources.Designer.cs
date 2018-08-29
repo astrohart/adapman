@@ -61,6 +61,15 @@ namespace adapman.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Must specify the network security key of the wifi network you want to connect to.  This method does not support so-called &apos;open&apos; hotspots..
+        /// </summary>
+        public static string ConnectPasswordReq {
+            get {
+                return ResourceManager.GetString("ConnectPasswordReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Must specify the SSID of the wifi network you want to connect to..
         /// </summary>
         public static string ConnectSSIDReq {

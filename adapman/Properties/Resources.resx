@@ -183,4 +183,7 @@ OPTIONS:
   <data name="ConnectWifiPasswordArgument" xml:space="preserve">
     <value>-cw:pwd</value>
   </data>
+  <data name="ConnectPasswordReq" xml:space="preserve">
+    <value>Must specify the network security key of the wifi network you want to connect to.  This method does not support so-called 'open' hotspots.</value>
+  </data>
 </root>
