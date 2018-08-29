@@ -31,10 +31,11 @@ namespace adapman
             foreach (var managementBaseObject in results)
             {
                 var currentManagementObject = (ManagementObject)managementBaseObject;
+                if (currentManagementObject == null)
+                    continue;
+
                 try
                 {
-                    if (currentManagementObject == null)
-                        continue;
 
                     var devId = Convert.ToInt32(currentManagementObject["DeviceID"].ToString());
                     var productName = currentManagementObject["ProductName"].ToString();
