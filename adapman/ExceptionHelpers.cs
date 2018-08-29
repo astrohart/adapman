@@ -17,7 +17,7 @@ namespace adapman
         /// property. If this is not able to be done, then the method returns the empty string.</remarks>
         public static string GetMessageFromExceptionObject(object exceptionObject)
         {
-            return !(exceptionObject is Exception exception) ? String.Empty : exception.Message;
+            return !(exceptionObject is Exception exception) ? string.Empty : exception.Message;
         }
     }
 }
