@@ -13,6 +13,9 @@ namespace adapman
         ///<summary>
         /// Gets a list of all the available network adapters on a system.
         ///</summary>
+        /// <remarks>Returns the empty list if no network adapters could
+        /// be found or if the list of network adapters could not be
+        /// enumerated.</remarks>
         public static List<NetworkAdapter> GetAdapters()
         {
             var adapters = new List<NetworkAdapter>();
