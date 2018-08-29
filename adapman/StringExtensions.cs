@@ -23,10 +23,17 @@ namespace adapman
         /// </returns>
         public static bool ContainsNoCase(this ICollection<string> collection, string findWhat)
         {
+            // If the specified collection is a null reference or does not
+            // contain any elements, then, by definition, it doesn't contain the
+            // value being searched for.
             if (collection == null || !collection.Any())
                 return false;
 
-            return collection.Any(element => element.ToLowerInvariant().Contains(findWhat.ToLowerInvariant()));
+            // Perform a case-insensitive search for the value in the collection
+            // by first converting each element and the findWhat value to
+            // lowercase and then comparing.
+            return collection.Any(element => element.ToLowerInvariant()
+                .Contains(findWhat.ToLowerInvariant()));
         }
     }
 }
