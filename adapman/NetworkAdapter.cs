@@ -9,7 +9,7 @@ namespace adapman
     {
         /// <summary>
         /// Constructs a new instance of <see cref="T:adapman.NetworkAdapter" />
-        /// and returns a refernce to it.
+        /// and returns a reference to it.
         /// </summary>
         /// <param name="deviceId">
         /// Integer specifying the Windows device ID of the adapter.
