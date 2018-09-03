@@ -72,7 +72,33 @@ namespace adapman
         /// </summary>
         public void Disable()
         {
-            DoDisable();
+            try
+            {
+                var currentManagementObject = new ManagementObject();
+                var queryString =
+                    "SELECT DeviceID,ProductName,Description,NetEnabled FROM " +
+                    $"Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
+
+                var query = new ObjectQuery(queryString);
+                var searcher = new ManagementObjectSearcher(query);
+                var results = searcher.Get();
+
+                foreach (var managementBaseObject in results)
+                {
+                    currentManagementObject = (ManagementObject)managementBaseObject;
+                }
+
+                // Disable the Network Adapter by invoking the appropriate method
+                // on the management object found
+                currentManagementObject.InvokeMethod("Disable", null);
+
+                IsEnabled = false;
+            }
+            catch
+            {
+                // Nothing here
+                IsEnabled = true;       // failed to disable
+            }
         }
 
         /// <summary>
@@ -80,14 +106,6 @@ namespace adapman
         /// networks).
         /// </summary>
         public void Enable()
-        {
-            DoEnable();
-        }
-
-        /// <summary>
-        /// Implements the code to enable a network adapter.
-        /// </summary>
-        private void DoEnable()
         {
             try
             {
@@ -115,40 +133,6 @@ namespace adapman
             {
                 // Nothing here
                 IsEnabled = false;      // failed to enable
-            }
-        }
-
-        /// <summary>
-        /// Implements the code to disable a network adapter.
-        /// </summary>
-        private void DoDisable()
-        {
-            try
-            {
-                var currentManagementObject = new ManagementObject();
-                var queryString =
-                    "SELECT DeviceID,ProductName,Description,NetEnabled FROM " +
-                    $"Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
-
-                var query = new ObjectQuery(queryString);
-                var searcher = new ManagementObjectSearcher(query);
-                var results = searcher.Get();
-
-                foreach (var managementBaseObject in results)
-                {
-                    currentManagementObject = (ManagementObject)managementBaseObject;
-                }
-
-                // Disable the Network Adapter by invoking the appropriate method
-                // on the management object found
-                currentManagementObject.InvokeMethod("Disable", null);
-
-                IsEnabled = false;
-            }
-            catch
-            {
-                // Nothing here
-                IsEnabled = true;       // failed to disable
             }
         }
     }
