@@ -90,7 +90,7 @@ namespace adapman
 
                 // Disable the Network Adapter by invoking the appropriate method
                 // on the management object found
-                currentManagementObject.InvokeMethod("Disable", null);
+                currentManagementObject?.InvokeMethod("Disable", null);
 
                 IsEnabled = false;
             }
@@ -125,7 +125,7 @@ namespace adapman
 
                 // Enable the Network Adapter by invoking the appropriate method
                 // on the WMI management object found by the query above
-                currentManagementObject.InvokeMethod("Enable", null);
+                currentManagementObject?.InvokeMethod("Enable", null);
 
                 IsEnabled = true;
             }
