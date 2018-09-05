@@ -36,7 +36,7 @@ namespace adapman
 
             foreach (var managementBaseObject in results)
             {
-                var currentManagementObject = (ManagementObject)managementBaseObject;
+                var currentManagementObject = (ManagementObject) managementBaseObject;
                 if (currentManagementObject == null)
                     continue;
 
@@ -63,7 +63,10 @@ namespace adapman
                 {
                     // ignore some adapters, such as the Bluetooth adapter, that
                     // need user interaction to enable/disable, per
-                    // <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>\
+                    // <https://stackoverflow.com/questions/49685601/how-to-close-all-connections-to-internet>
+                    // The thinking is that a NullReferenceException is thrown when the code tries to query 
+                    // WMI for a Bluetooth adapter, so by ignoring NullReferenceExceptions, we are, in 
+                    // essence, ignoring any query results for a Bluetooth adapter.
                 }
             }
 
