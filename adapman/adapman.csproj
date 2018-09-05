@@ -71,6 +71,7 @@
     <Compile Include="CommandLineAction.cs" />
     <Compile Include="CommandLineInfo.cs" />
     <Compile Include="CommandLineValidator.cs" />
+    <Compile Include="DataHelpers.cs" />
     <Compile Include="ExceptionHelpers.cs" />
     <Compile Include="NetworkAdapter.cs" />
     <Compile Include="NetworkAdapterManager.cs" />

@@ -44,22 +44,23 @@ namespace adapman
 
                 try
                 {
+                    // See the DataHelpers class for implementation of the
+                    // GetValueWithDefault extension method
+                    var devId = currentManagementObject["DeviceID"].GetValueWithDefault(-1);
+                    var productName = currentManagementObject["ProductName"].GetValueWithDefault(string.Empty);
+                    var description = currentManagementObject["Description"].GetValueWithDefault(string.Empty);
+                    var netEnabled = currentManagementObject["NetEnabled"].GetValueWithDefault(false);
+                    var netConnectionStatus = currentManagementObject["NetConnectionStatus"].GetValueWithDefault(-1);
 
-                    var devId = Convert.ToInt32(currentManagementObject["DeviceID"].ToString());
-                    var productName = currentManagementObject["ProductName"].ToString();
-                    var description = currentManagementObject["Description"].ToString();
-                    var netConnectionStatus = currentManagementObject["NetConnectionStatus"] == null
-                        ? -1
-                        : Convert.ToInt32(currentManagementObject["NetConnectionStatus"].ToString());
-
-                    var netEnabled = Convert.ToBoolean(currentManagementObject["NetEnabled"].ToString());
-
-                    adapters.Add(new NetworkAdapter(
+                    // Initialize a new NetworkAdapter object with the values read above and then 
+                    // add a referenec to the newly-initalized object to the adapters list
+                    var newAdapter = new NetworkAdapter(
                         devId,
                         productName,
                         description,
                         netEnabled,
-                        netConnectionStatus));
+                        netConnectionStatus);
+                    adapters.Add(newAdapter);
                 }
                 catch (NullReferenceException)
                 {
