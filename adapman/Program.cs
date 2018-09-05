@@ -57,7 +57,7 @@ namespace adapman
                     // method to disable it (i.e., turn it off.).
                     foreach (var adapter in NetworkAdapterManager.GetAdapters()) {
                         // Assume the 'adapter' variable holds a non-null reference.
-                        adapter.Disable();
+                        NetworkAdapterManager.Disable();
                     }
                     break;
                 

@@ -1,6 +1,4 @@
-﻿using System.Management;
-
-namespace adapman
+﻿namespace adapman
 {
     /// <summary>
     /// Provides an encapsulation of a network adapter entry in Windows.
@@ -58,82 +56,12 @@ namespace adapman
         /// <summary>
         /// Gets a flag indicating whether this adapter is enabled.
         /// </summary>
-        public bool IsEnabled { get; private set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Gets a string containing the product name of this adapter as listed
         /// by the operating system.
         /// </summary>
         public string ProductName { get; }
-
-        /// <summary>
-        /// Disables this network adapter (i.e., makes it unusable for connecting
-        /// to networks).
-        /// </summary>
-        public void Disable()
-        {
-            try
-            {
-                var currentManagementObject = new ManagementObject();
-                var queryString =
-                    "SELECT DeviceID,ProductName,Description,NetEnabled FROM " +
-                    $"Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
-
-                var query = new ObjectQuery(queryString);
-                var searcher = new ManagementObjectSearcher(query);
-                var results = searcher.Get();
-
-                foreach (var managementBaseObject in results)
-                {
-                    currentManagementObject = (ManagementObject)managementBaseObject;
-                }
-
-                // Disable the Network Adapter by invoking the appropriate method
-                // on the management object found
-                currentManagementObject?.InvokeMethod("Disable", null);
-
-                IsEnabled = false;
-            }
-            catch
-            {
-                // Nothing here
-                IsEnabled = true;       // failed to disable
-            }
-        }
-
-        /// <summary>
-        /// Enables this network adapter (sets it as being able to connect to
-        /// networks).
-        /// </summary>
-        public void Enable()
-        {
-            try
-            {
-                var currentManagementObject = new ManagementObject();
-                var queryString =
-                    "SELECT DeviceID,ProductName,Description,NetEnabled FROM " +
-                    $"Win32_NetworkAdapter WHERE DeviceID = {DeviceID}";
-
-                var query = new ObjectQuery(queryString);
-                var searcher = new ManagementObjectSearcher(query);
-                var results = searcher.Get();
-
-                foreach (var managementBaseObject in results)
-                {
-                    currentManagementObject = (ManagementObject)managementBaseObject;
-                }
-
-                // Enable the Network Adapter by invoking the appropriate method
-                // on the WMI management object found by the query above
-                currentManagementObject?.InvokeMethod("Enable", null);
-
-                IsEnabled = true;
-            }
-            catch
-            {
-                // Nothing here
-                IsEnabled = false;      // failed to enable
-            }
-        }
     }
 }
