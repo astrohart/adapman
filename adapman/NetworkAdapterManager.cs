@@ -20,10 +20,12 @@ namespace adapman
         {
             var adapters = new List<NetworkAdapter>();
 
+            // Windows Management Instrumentation (WMI) database query
             const string queryString = "SELECT DeviceID, ProductName, Description, "
                                        + "NetEnabled, NetConnectionStatus "
                                        + "FROM Win32_NetworkAdapter "
                                        + "WHERE Manufacturer <> 'Microsoft' ";
+
             var query = new ObjectQuery(queryString);
             var searcher = new ManagementObjectSearcher(query);
             var results = searcher.Get();
