@@ -13,8 +13,8 @@ namespace adapman.Tests
             if (!adapters.Any())
                 return;
 
-            foreach(var adapter in adapters)
-                adapter.Enable();
+            foreach (var adapter in adapters)
+                NetworkAdapterManager.Enable(adapter);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace adapman.Tests
                 return;
 
             foreach(var adapter in adapters)
-                adapter.Disable();
+                NetworkAdapterManager.Disable(adapter);
         }
     }
 }
