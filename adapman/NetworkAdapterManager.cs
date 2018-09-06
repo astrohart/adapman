@@ -51,7 +51,7 @@ namespace adapman
 
                 adapter.IsEnabled = true;
             }
-            catch
+            catch (Exception ex)
             {
                 // Nothing here
                 adapter.IsEnabled = false;      // failed to enable
